@@ -2,13 +2,9 @@ import { addNewCoord, showCoords } from './tsp.js';
 
 function getSquare(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
-    addNewCoord(
-        Math.floor((1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10)/10), 
-        Math.floor((1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10)/10),
-    )
     return {
-        x: 1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10,
-        y: 1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10
+        x: .5 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10,
+        y: .5 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10
     };
 }
 
@@ -32,6 +28,10 @@ function fillSquare(context, x, y){
     context.fillRect(x,y,9,9);
 }
 
+function unFillSquare(context, x, y){
+    context.clearRect(x,y,9,9)
+}
+
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
 
@@ -39,7 +39,16 @@ drawGrid(context);
 
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
-    fillSquare(context, mousePos.x, mousePos.y)
+    var rect = canvas.getBoundingClientRect();
+    var alreadyClicked = addNewCoord(
+        Math.floor((1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10)/10), 
+        Math.floor((1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10)/10),
+    )
+    if (alreadyClicked) {
+        unFillSquare(context, mousePos.x, mousePos.y)
+    } else {
+        fillSquare(context, mousePos.x, mousePos.y)
+    }
 }, false);
 
 document.getElementById('path').addEventListener('click', showCoords);
