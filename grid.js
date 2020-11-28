@@ -1,5 +1,11 @@
+import { addNewCoord } from './tsp.js';
+
 function getSquare(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
+    addNewCoord(
+        Math.floor((1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10)/10), 
+        Math.floor((1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10)/10),
+    )
     return {
         x: 1 + (evt.clientX - rect.left) - (evt.clientX - rect.left)%10,
         y: 1 + (evt.clientY - rect.top) - (evt.clientY - rect.top)%10
