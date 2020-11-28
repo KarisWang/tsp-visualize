@@ -1,4 +1,4 @@
-import { addNewCoord } from './tsp.js';
+import { addNewCoord, showCoords } from './tsp.js';
 
 function getSquare(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -41,3 +41,7 @@ canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);
     fillSquare(context, mousePos.x, mousePos.y)
 }, false);
+
+document.getElementById('path').addEventListener('click', showCoords);
+document.getElementById('clear').addEventListener('click', window.location.reload.bind(window.location));
+
