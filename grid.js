@@ -1,4 +1,4 @@
-import { addNewCoord, two_opt } from './tsp.js';
+import { addNewCoord, two_opt, nearest_neighbor } from './tsp.js';
 
 function getSquare(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -14,9 +14,9 @@ function drawGrid(context) {
       context.lineTo(x, 1000);
     }
     
-    for (var y = 0.5; y < 10001; y += 10) {
+    for (var y = 0.5; y < 1000; y += 10) {
       context.moveTo(0, y);
-      context.lineTo(10000, y);
+      context.lineTo(1000, y);
     }
     
     context.strokeStyle = "#000000";
@@ -35,7 +35,7 @@ function unFillSquare(context, x, y){
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
 
-drawGrid(context);
+// drawGrid(context);
 
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);

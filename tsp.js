@@ -21,9 +21,84 @@ export function addNewCoord(x, y) {
 }
 
 export const two_opt = async () => {
+
+    // Goes in every tsp method
     var canvas = document.querySelector('canvas'),
     context = canvas.getContext('2d');
     var imageData = context.getImageData(0,0,canvas.width,canvas.height);
+
+    let distance_matrix = calculate_distance_matrix()
+
+    let current_path = []
+    for(let i = 0; i < x_list.length; i++) {
+        current_path.push(i)
+    }
+
+    console.log(current_path)
+    console.log(calculate_path_length(distance_matrix, current_path))
+    context.putImageData(imageData, 0, 0);
+    draw_path(current_path)
+
+    let no_change = true
+    while (no_change) {
+        no_change = false
+        for (let i = 0; i < current_path.length; i++) {
+            for (let j = i + 1; j < current_path.length; j++) {
+                let swap_length = distance_matrix[current_path[i]][current_path[(i+1)%current_path.length]] + distance_matrix[current_path[j]][current_path[(j+1)%current_path.length]]
+                let previous_length = distance_matrix[current_path[i]][current_path[j]] + distance_matrix[current_path[(j+1)%current_path.length]][current_path[(i+1)%current_path.length]]
+                if (swap_length > previous_length) {
+                    no_change = true
+                    await delay(200)
+
+                    current_path = [...current_path.slice(0, i + 1), ...current_path.slice(i + 1, j + 1).reverse(), ...current_path.slice(j + 1)]
+
+                    console.log(current_path)
+                    console.log(calculate_path_length(distance_matrix, current_path))
+                    context.putImageData(imageData, 0, 0);
+                    draw_path(current_path)
+                }
+            }
+        }
+    }
+}
+
+export const nearest_neighbor = async () => {
+    // Goes in every tsp method
+    var canvas = document.querySelector('canvas'),
+    context = canvas.getContext('2d');
+    var imageData = context.getImageData(0,0,canvas.width,canvas.height);
+
+    let distance_matrix = calculate_distance_matrix()
+    let current_path = [0]
+    let remaining_nodes = []
+    for (let i = 1; i < x_list.length; i++) {
+        remaining_nodes.push(i)
+    }
+
+    for (let i = 0; i < x_list.length; i++) {
+        let min_distance_node = 0
+        let min_distance = distance_matrix[current_path[current_path.length-1]][remaining_nodes[min_distance_node]]
+        for (let j = 0; j < remaining_nodes.length; j++) {
+            if (distance_matrix[current_path[current_path.length-1]][remaining_nodes[min_distance_node]] > 
+                distance_matrix[current_path[current_path.length-1]][remaining_nodes[j]]) {
+                    min_distance = distance_matrix[current_path[current_path.length-1]][remaining_nodes[j]]
+                    min_distance_node = j
+            }
+        }
+        await delay(200)
+        current_path.push(remaining_nodes[min_distance_node])
+        remaining_nodes.splice(min_distance_node, 1)
+        context.putImageData(imageData, 0, 0);
+        draw_path(current_path)
+        if (remaining_nodes.length == 0) {
+            break
+        }
+    }
+    console.log(current_path)
+    console.log(calculate_path_length(distance_matrix, current_path))
+}
+
+function calculate_distance_matrix() {
     let distance_matrix = []
     for(let i = 0; i < x_list.length; i++) {
         distance_matrix[i] = []
@@ -31,42 +106,15 @@ export const two_opt = async () => {
             distance_matrix[i][j] = Math.sqrt(Math.pow(x_list[i]-x_list[j], 2) + Math.pow(y_list[i]-y_list[j], 2))
         }
     }
-    console.log(distance_matrix)
-    let current_path = []
-    for(let i = 0; i < x_list.length; i++) {
-        current_path.push(i)
+    return distance_matrix
+}
+
+function calculate_path_length(distance_matrix, current_path) {
+    let total_sum = 0
+    for (let i = 0; i < current_path.length; i++) {
+        total_sum += distance_matrix[current_path[i]][current_path[(i+1)%current_path.length]]
     }
-    console.log(current_path)
-    let no_swap = 0
-    let i = 0
-    while (no_swap < x_list.length) {
-        console.log(current_path)
-        context.putImageData(imageData, 0, 0);
-        draw_path(current_path)
-        let previous_length = distance_matrix[current_path[i]][current_path[(i+1)%current_path.length]] + 
-                                distance_matrix[current_path[(i+1)%current_path.length]][current_path[(i+2)%current_path.length]] + 
-                                distance_matrix[current_path[(i+2)%current_path.length]][current_path[(i+3)%current_path.length]]
-        let swap_length = distance_matrix[current_path[i]][current_path[(i+2)%current_path.length]] + 
-                            distance_matrix[current_path[(i+2)%current_path.length]][current_path[(i+1)%current_path.length]] + 
-                            distance_matrix[current_path[(i+1)%current_path.length]][current_path[(i+3)%current_path.length]]
-        console.log(previous_length)
-        console.log(swap_length)
-        if (swap_length < previous_length) {
-            await delay(500)
-            let temp = current_path[(i+1)%current_path.length]
-            current_path[(i+1)%current_path.length] = current_path[(i+2)%current_path.length]
-            current_path[(i+2)%current_path.length] = temp
-            no_swap = 0
-        } else {
-            no_swap++
-        }
-        i++
-        if (i >= current_path.length) {
-            i = 0;
-        }
-        console.log(current_path)
-    }
-    console.log(current_path)
+    return total_sum
 }
 
 function draw_path(current_path) {
