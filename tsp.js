@@ -44,13 +44,19 @@ export const two_opt = async () => {
         no_change = false
         for (let i = 0; i < current_path.length; i++) {
             for (let j = i + 1; j < current_path.length; j++) {
-                let swap_length = distance_matrix[current_path[i]][current_path[(i+1)%current_path.length]] + distance_matrix[current_path[j]][current_path[(j+1)%current_path.length]]
-                let previous_length = distance_matrix[current_path[i]][current_path[j]] + distance_matrix[current_path[(j+1)%current_path.length]][current_path[(i+1)%current_path.length]]
+                let swap_length = distance_matrix[current_path[i]][current_path[(i+1)%current_path.length]] + 
+                                    distance_matrix[current_path[j]][current_path[(j+1)%current_path.length]]
+                let previous_length = distance_matrix[current_path[i]][current_path[j]] + 
+                                        distance_matrix[current_path[(j+1)%current_path.length]][current_path[(i+1)%current_path.length]]
                 if (swap_length > previous_length) {
                     no_change = true
                     await delay(200)
 
-                    current_path = [...current_path.slice(0, i + 1), ...current_path.slice(i + 1, j + 1).reverse(), ...current_path.slice(j + 1)]
+                    current_path = [
+                        ...current_path.slice(0, i + 1), 
+                        ...current_path.slice(i + 1, j + 1).reverse(), 
+                        ...current_path.slice(j + 1)
+                    ]
 
                     console.log(current_path)
                     console.log(calculate_path_length(distance_matrix, current_path))
@@ -103,7 +109,8 @@ function calculate_distance_matrix() {
     for(let i = 0; i < x_list.length; i++) {
         distance_matrix[i] = []
         for(let j = 0; j < x_list.length; j++) {
-            distance_matrix[i][j] = Math.sqrt(Math.pow(x_list[i]-x_list[j], 2) + Math.pow(y_list[i]-y_list[j], 2))
+            distance_matrix[i][j] = Math.sqrt(Math.pow(x_list[i]-x_list[j], 2) + 
+                                        Math.pow(y_list[i]-y_list[j], 2))
         }
     }
     return distance_matrix
