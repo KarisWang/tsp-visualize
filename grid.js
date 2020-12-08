@@ -35,7 +35,7 @@ function unFillSquare(context, x, y){
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
 
-// drawGrid(context);
+drawGrid(context);
 
 canvas.addEventListener('click', function(evt) {
     var mousePos = getSquare(canvas, evt);

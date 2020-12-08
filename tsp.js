@@ -17,6 +17,9 @@ export function addNewCoord(x, y) {
     }
     x_list.push(x)
     y_list.push(y)
+
+    console.log(x_list);
+    console.log(y_list);
     return false
 }
 
@@ -138,8 +141,8 @@ function draw_path(current_path) {
         let yNext = y_list[nextPoint]
 
         ctx.beginPath();
-        ctx.moveTo(xPoint*10+4.5, yPoint*10+4.5);
-        ctx.lineTo(xNext*10+4.5, yNext*10+4.5)
+        ctx.moveTo(xPoint*20+10, yPoint*20+10);
+        ctx.lineTo(xNext*20+10, yNext*20+10)
         ctx.strokeStyle = "red"
         ctx.stroke();
     }

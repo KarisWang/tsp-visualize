@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID</title>
+    <h1>Travelling Salesman</h1>
+</head>
+
+<style>
+    h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+
+    h1 {
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+        font-size: 36px;
+        font-weight: bold;
+    }
+    body {
+        margin: auto;
+    }
+
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    table td
+    {
+        padding: 8px;
+        border: 1px solid #d6d6d6;
+        border-radius: 2px;
+        position: relative;
+        z-index: 10000;
+    }
+
+    td:hover {
+        background-color:#f0f0f0;
+    }
+
+    table{
+        position: relative;
+        margin: auto;
+    }
+
+    #myCanvas {
+        position: absolute;
+        z-index: -1;
+        /* border: 1px solid black; */
+        margin-left: 65px;
+    }
+
+    #path {
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    display: inline-block;
+    font-size: 1em;
+    padding: 1em 2em;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: rgb(206, 148, 206);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+    }
+
+    #path:focus {
+        background-color: rgb(53, 43, 53);
+        box-shadow: 0 2px 25px rgba(73, 65, 69, 0.5);
+    }
+
+</style>
+<body bgcolor = "white">
+    <div class = center>
+        <div id = "body" ></div>
+        <button type = "button" id = "path" >Get Path</button>
+    </div>
+    
+    
+</body>
+
+<script type="module" src="tsp2.js"></script>
+<canvas 
+        id="myCanvas"
+        height = "450"
+        width = "1410">
+    </canvas>
+</html>
+
