@@ -94,7 +94,7 @@ export const nearest_neighbor = async () => {
                     min_distance_node = j
             }
         }
-        await delay(200)
+        await delay(150)
         current_path.push(remaining_nodes[min_distance_node])
         remaining_nodes.splice(min_distance_node, 1)
         context.putImageData(imageData, 0, 0);
@@ -129,6 +129,8 @@ function calculate_path_length(distance_matrix, current_path) {
 
 function draw_path(current_path) {
     var canvas = document.getElementById("myCanvas");
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
     var ctx = canvas.getContext("2d");
     for (let i = 0; i < current_path.length; i++) {
         let point = current_path[i]
@@ -141,8 +143,8 @@ function draw_path(current_path) {
         let yNext = y_list[nextPoint]
 
         ctx.beginPath();
-        ctx.moveTo(xPoint*20+10, yPoint*20+10);
-        ctx.lineTo(xNext*20+10, yNext*20+10)
+        ctx.moveTo(xPoint*(canvas.width/70)+8, yPoint*(canvas.height/20)+8);
+        ctx.lineTo(xNext*(canvas.width/70)+8, yNext*(canvas.height/20)+8);
         ctx.strokeStyle = "red"
         ctx.stroke();
     }

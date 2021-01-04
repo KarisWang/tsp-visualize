@@ -28,6 +28,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
     table td
     {
@@ -35,7 +36,7 @@
         border: 1px solid #d6d6d6;
         border-radius: 2px;
         position: relative;
-        z-index: 10000;
+        z-index: 20;
     }
 
     td:hover {
@@ -43,55 +44,58 @@
     }
 
     table{
+        width: 100vw;
+        height: auto;
         position: relative;
         margin: auto;
     }
 
-    #myCanvas {
-        position: absolute;
-        z-index: -1;
-        /* border: 1px solid black; */
-        margin-left: 65px;
-    }
-
     #path {
-    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    display: inline-block;
-    font-size: 1em;
-    padding: 1em 2em;
-    margin-top: 20px;
-    margin-bottom: 60px;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: rgb(206, 148, 206);
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
-    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+        font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+        display: inline-block;
+        border-radius: 30px;
+        font-size: 1em;
+        padding: 1em 2em;
+        margin-top: 20px;
+        margin-bottom: 60px;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: rgb(206, 148, 206);
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+        box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
     }
 
     #path:focus {
         background-color: rgb(53, 43, 53);
         box-shadow: 0 2px 25px rgba(73, 65, 69, 0.5);
+        border: none;
+        outline: none;
+        transition: background-color ease-in .5s, box-shadow ease-in .5s;
+    }
+
+    #myCanvas {
+        border: 1px solid black;
+        position: absolute;
+        z-index: 10;
+
     }
 
 </style>
-<body bgcolor = "white">
+<body>
     <div class = center>
-        <div id = "body" ></div>
+        <div id = "body" > </div>
         <button type = "button" id = "path" >Get Path</button>
     </div>
+
+    <canvas id = "myCanvas"></canvas></canvas>
     
     
 </body>
 
 <script type="module" src="tsp2.js"></script>
-<canvas 
-        id="myCanvas"
-        height = "450"
-        width = "1410">
-    </canvas>
 </html>
 

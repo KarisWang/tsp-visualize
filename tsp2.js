@@ -4,6 +4,7 @@ window.onload = function() {
     var body = document.getElementsByTagName("body")[0];
 
     var table = document.createElement('TABLE');
+    table.id = "myTable";
 
     var tblB = document.createElement('TBODY');
     table.appendChild(tblB);
@@ -22,6 +23,7 @@ window.onload = function() {
         }
     }
     body.appendChild(table);
+
     table.addEventListener('click', function(evt) {
         if (evt.target.tagName === 'TD') {
             // change color of button clicked here
@@ -37,6 +39,16 @@ window.onload = function() {
             
         }
     })
+
+    document.getElementById('myCanvas').style.height = table.offsetHeight + "px"; 
+    document.getElementById('myCanvas').style.width = table.offsetWidth + "px"; 
+
+    function resize(){
+        document.getElementById('myCanvas').style.height = table.offsetHeight + "px"; 
+        document.getElementById('myCanvas').style.width = table.offsetWidth + "px"; 
+      }
+
+    window.addEventListener("resize", resize, false);
 
     document.getElementById('path').addEventListener('click', two_opt);
 }
